@@ -1,0 +1,45 @@
+import java.io.BufferedReader;
+import java.io.FileWriter;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Scanner;
+
+public class Apijarfileuse {
+    public static void main(String[] args) {
+        try {
+            Scanner obj = new Scanner(System.in);
+            System.out.println("Enter your contry");
+            System.out.println("Enter your district");
+            String dis=obj.nextLine();
+            URL url = new URL("http://api.openweathermap.org/geo/1.0/direct?q="+dis+",rajasthan,india&limit1&appid=e34d930991360bd6b5727677d0eae368");
+// connection established karne ke liye
+            HttpURLConnection dat =(HttpURLConnection) url.openConnection();
+            dat.setRequestMethod("GET");
+// data ko read karane k liye
+            InputStreamReader in = new InputStreamReader(dat.getInputStream());
+            BufferedReader in1 = new BufferedReader(in);
+
+            String st="";
+
+            while(st!=null)
+            {
+                st=in1.readLine();
+                System.out.println(st);
+                FileWriter fw=new FileWriter("webfile.txt", true);
+                for(int i=0; i<st.length();i++){
+                    fw.write(st);
+                    System.out.println("-----------------");
+                    System.out.println("Writing successful");
+                    fw.close();}
+
+            }
+            in1.close();
+
+
+        }
+        catch (Exception e){
+            System.out.println(e);
+        }
+    }
+}
